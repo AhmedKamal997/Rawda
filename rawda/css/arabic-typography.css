@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Google Fonts import removed — using self-hosted Cairo in rawda/fonts */
+/* @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap'); */
+
+:root{--bs-font-sans-serif:"Cairo" !important}
+html,body{font-family:"Cairo"!important}
+body :not(i):not([class*="fa-"]):not([class*="bi"]):not([class*="bootstrap-icons"]) {font-family:"Cairo"!important}
+h1, h2, h3, h4, h5, h6, .section h3, #targets-title {font-family:"Cairo", sans-serif !important}
+h1{font-size:32px}
+h2{font-size:28px}
+.note{font-size:15px}

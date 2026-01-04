@@ -1,0 +1,1483 @@
+<!doctype html>
+<html lang="ar">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rawda Award — Static Page</title>
+    <!-- Bootstrap CSS to match Drupal layout/header behaviors -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous">
+    <!-- MSDF theme RTL stylesheet to render footer as-is -->
+    <link href="rawda/css/main-ar.css?v=2" rel="stylesheet">
+    <!-- Load Cairo overrides LAST so they take precedence over theme -->
+    <link href="rawda/css/arabic-typography.css" rel="stylesheet">
+    <!-- Google Fonts fallback: ensures Cairo renders until local files exist -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet">
+    <!-- Font Awesome for social icons used in MSDF footer -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+      integrity="sha512-RXf+QSDCUQs6b4v5A9R2v6KUVKp1R9+XcMgy7pYzFSHLn3U4a8gE9F7R5C3XxR28Z59TLEEqzvvR1vpuYeIRsA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <script>
+      (function() {
+        try {
+          var d = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie') || Object.getOwnPropertyDescriptor(HTMLDocument.prototype, 'cookie');
+          if (!d || !d.set) return;
+          Object.defineProperty(Document.prototype, 'cookie', {
+            configurable: true,
+            enumerable: true,
+            get: d.get.bind(document),
+            set: function(v) {
+              v = String(v || '');
+              if (location.protocol === 'https:') {
+                if (!/;\s*Secure/i.test(v)) v += '; Secure';
+                if (!/;\s*SameSite=/i.test(v)) v += '; SameSite=Lax';
+              }
+              d.set.call(document, v);
+            }
+          });
+        } catch (_) {}
+      })();
+    </script>
+    <style>
+
+    /* --- Minimal reset and variables --- */
+    :root {
+      /* Force Bootstrap sans-serif to Cairo; keep default monospace */
+      --bs-font-sans-serif: "Cairo";
+      font-family: 'Cairo';
+      --primary:#8a1d2a;
+      --primary-dark:#6e1621;
+      --text:#2b2b2b;
+      --light:#fff;
+      --iphone-min:600px; /* Minimum width to lock for iPhone mode */
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    /* Ensure Cairo applies everywhere, overriding any later font-family */
+    html, body { font-family: 'Cairo' !important; }
+    body :not(i):not([class*="fa-"]):not([class*="bi"]):not([class*="bootstrap-icons"]) { font-family: 'Cairo' !important; }
+    /* body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans";color:var(--text);background:#f7f7f7} */
+
+    /* --- Header (copied look & feel) --- */
+    header{background:#fff;border-bottom:1px solid #eee}
+    .header-wrapper{max-width:1200px;margin:0 auto;padding:10px 16px}
+    
+    /* Ensure inner header content places logo on the right for RTL */
+    .header-wrapper .col-12.d-flex{flex-direction:row-reverse}
+    /* Keep header clean of decorative pseudo-elements */
+    header::before, header::after{content:none!important}
+    /* Show only the compact ministry logo (no large/expo images) */
+    .logo{display:flex;align-items:center}
+    .logo img.large-logo{display:none!important}
+    .logo img.small-logo{display:block;height:48px; max-width: 100%;}
+    /* Remove mask variant; use header-ready logo asset for clarity */
+    /* Remove nav/hamburger entirely */
+    .mobile-menu,.navbar{display:none!important}
+    /* Hide primary navigation on Rawda page */
+    .navbar-nav{display:none!important}
+    .lang-toggle{display:flex;gap:8px;align-items:center}
+    .lang-toggle button{border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 10px;cursor:pointer}
+    .lang-toggle button.active{border-color:var(--primary);color:var(--light);background:var(--primary)}
+    /* Mobile menu toggle look */
+    /* Hamburger styles no longer needed */
+    .mobile-menu .navbar-toggler{display:none}
+    .hamburger-toggle .hamburger span{display:none}
+    /* top accent strip like Drupal */
+    .top-strip{height:6px;background:#8a1d2a;width:100%}
+
+    /* --- Hero section --- */
+    .hero{position:relative;margin-top: 8%;min-height:70vh;display:flex;align-items:center;text-align:center;color:var(--light);background-color: #043531;overflow: hidden;}
+    .hero-media{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
+    .hero-media .hero-img{width:100%;height:100%;object-fit:cover;object-position: center center;}
+    .hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(4,53,49,.45);z-index:1;}
+    .hero .content{position:relative;z-index:2;width:100%;padding: 40px 16px;max-width:1000px;margin:0 auto ;}
+    /*.hero .content{padding:40px 16px;max-width:1000px; width: 100%;}*/
+    .hero h1{margin:0 0 12px;font-size:36px;font-weight:800;letter-spacing:.5px; line-height: 1.2;}
+    .hero h2{margin:0 0 20px;font-size:28px;font-weight:800;letter-spacing:.5px; line-height: 1.3;}
+    .hero p{margin:0 auto 24px;font-size:18px;line-height:1.9;max-width:900px}
+    .cta{display:inline-block;background:var(--light);color:var(--primary-dark);padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700}
+    .cta:hover{background:#f0f0f0}
+    body[dir='rtl'] #hero-ar{text-align:right}
+    body[dir='rtl'] .hero .content{text-align:right;max-width:700px;margin-left:auto;margin-right:40px}
+    body[dir='ltr'] #hero-en{text-align:left}
+    body[dir='ltr'] .hero .content{text-align:left;max-width:1200px;margin-left:auto;margin-right:40px}
+    .hero h1,.hero h2{color:#fff}
+    body[dir='ltr'] .hero h1 { font-size: 28px; }
+    .hero h1 .accent{color:#d9c3a7}
+    .hero .hero-link{display:inline-block;padding:10px 18px;border-radius:999px;background:#d9c3a7;color:#fff;text-decoration:none;font-weight:700;border:1px solid #c8b092}
+    /* REMOVE or COMMENT OUT these lines: */
+    .hero-media .hero-img {
+        object-fit: cover;
+        object-position: 20% top; /* This is causing the problem */
+    }
+  /* --- Sections --- */
+  .section{background:#fff;margin:24px auto;padding:24px 16px;max-width:1200px;border:1px solid #eee;border-radius:10px; width: calc(100% - 32px);} 
+  .section h3{color:var(--primary-dark);font-size:24px;margin:0 0 18px;text-align:center}
+  .section .bar{
+    display: inline-block;
+    position: relative;
+    background: transparent;
+    color: #043531;
+    padding: 0;
+    border-radius: 0;
+    font-weight: 800;
+    font-size: 32px;
+    margin: 8px 0 24px;
+    min-width: auto;
+    text-align: inherit;
+  }
+  .section .bar::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    background-color: #c9a875;
+  }
+  
+  /* Arabic: Icon on Right */
+  body[dir='rtl'] .section .bar {
+    padding-right: 24px;
+    padding-left: 0;
+  }
+  body[dir='rtl'] .section .bar::after {
+    right: 0;
+    left: auto;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  /* English: Icon on Left */
+  body[dir='ltr'] .section .bar {
+    padding-left: 24px;
+    padding-right: 0;
+  }
+  body[dir='ltr'] .section .bar::after {
+    left: 0;
+    right: auto;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  
+  /* --- New Targets Design --- */
+  .targets-new{
+    background:#e8dcc8;
+    border:none;
+    padding:48px 40px;
+  }
+  .targets-new .targets-title{
+    color:#043531 !important;
+    font-size:32px;
+    font-weight:800;
+    text-align:center;
+    margin:0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  .targets-new .diamond-icon{
+    width: 14px;
+    height: 14px;
+    background-color: #c9a875 !important;
+    transform: rotate(45deg);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .targets-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:24px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .target-card{
+    background:transparent;
+    border:2px solid #c9a875;
+    border-radius:120px 120px 40px 40px;
+    padding:40px 20px 32px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    transition:all .3s ease;
+  }
+  .target-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 24px rgba(201,168,117,.2);
+    background:rgba(255,255,255,0.15);
+  }
+  .target-icon{
+    width:80px;
+    height:80px;
+    object-fit:contain;
+    filter:sepia(0.6) saturate(0.8) brightness(0.9) hue-rotate(-10deg);
+  }
+  .target-label{
+    color:#043531;
+    font-size:16px;
+    font-weight:700;
+    text-align:center;
+    line-height:1.4;
+  }
+  
+  /* Old targets styles (keeping for fallback) */
+  .targets .items{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  .targets .item{text-align:center}
+    .badge{width:72px;height:72px;border-radius:50%;background:#f1e6e8;border:2px solid var(--primary);display:grid;place-items:center;margin:0 auto 8px;color:var(--primary-dark);font-size:26px;font-weight:700}
+    .item span{display:block;color:#555;font-size:14px}
+
+    /* Footer styles come from MSDF theme (main-ar.css). */
+    /* Header options styling to resemble Drupal */
+    .site-options{display:flex;align-items:center;gap:14px}
+    .site-options .font-size a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:#f1f1f1;border:1px solid #d0d0d0;text-decoration:none;color:#333;font-weight:700;line-height:1}
+    .site-options .font-size a:hover{background:#e9e9e9;color:#8a1d2a}
+    .site-options .font-size a + a{margin-inline-start:6px}
+    .language-switcher{color:#333;cursor:pointer; padding: 8px 12px; border-radius: 6px;}
+    .language-switcher:hover {background: rgba(138, 29, 42, 0.1);}
+    /* Search icon removed */
+    .hero .content a.hero-link{color:#fff;text-decoration:underline;display:inline-block;margin-bottom:8px;font-weight:700}
+    /* Generic container for body text blocks */
+    .container{max-width:1200px;margin:0 auto;padding:0 16px; width: 100%;}
+    @media (max-width:576px){
+      .header-wrapper .col-12.d-flex{flex-direction:column!important;align-items:center!important}
+      header .logo{display:flex;justify-content:center!important;width:100%;margin:0 auto!important}
+      header .logo a{display:block}
+    }
+    /* --- About section (match node 542) --- */
+    .about .header{
+      color:#fff; border-radius:10px; padding:24px;
+      background:
+        linear-gradient(rgba(138,29,42,.45), rgba(138,29,42,.45)),
+        url('images/prize.png') center/cover no-repeat;
+    }
+    .about .header h3{font-size:32px;margin:0 0 12px;text-align:center;letter-spacing:.6px}
+    .about .bar{display:inline-block;background:#8A1D2A;color:#fff;padding:10px 16px;border-radius:8px;font-weight:800;margin:6px 0 10px}
+    .about .list{margin-top:10px}
+    .about .list ul{margin:8px 0 0; padding:0 18px}
+    .about .list li{margin:6px 0}
+    .note{background:#f7f2f3;border:1px solid #eadde0;border-radius:8px;padding:12px;text-align:center}
+    
+    .about-grid{display:grid;grid-template-columns:1fr;gap:16px}
+
+    /* --- Header Alignment (overrides generic direction) --- */
+  .section-header-wrapper { margin-top: 4px; }
+  body[dir='rtl'] .section-header-wrapper { text-align: right; }
+  body[dir='ltr'] .section-header-wrapper { text-align: left; }
+
+  /* --- Lists (new sections) --- */
+   .section ol {max-width:none;margin:0;padding-inline-start:20px;}
+   .section ol li {
+     margin-bottom:8px;
+     display: list-item !important;
+     list-style-position: inside !important;
+     list-style-type: inherit !important;
+   }
+   .section ol li::marker {
+     color: #c9a875;
+     font-weight: 800;
+   }
+   /* Arabic Lists (Eastern Arabic Numerals) */
+   #nc-ar ol, #ej-ar ol {
+     list-style-type: arabic-indic !important;
+     direction: rtl !important;
+     text-align: right !important;
+   }
+   /* English Lists (Western Arabic Numerals) */
+   #nc-en ol, #ej-en ol {
+     list-style-type: decimal !important;
+     direction: ltr !important;
+     text-align: left !important;
+   }
+
+  /* --- Awards Table Redesign --- */
+  .awards-section-title {
+    color: #043531 !important;
+    font-size: 28px;
+    font-weight: 800;
+    text-align: center;
+    margin: 32px 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  .awards-section-title .diamond-icon {
+    width: 14px;
+    height: 14px;
+    background-color: #c9a875 !important; /* Gold/Beige diamond */
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+
+  .table-wrap {
+    overflow: visible;
+    margin: 20px 0;
+    border-radius: 20px;
+    overflow: hidden; /* For container rounding */
+  }
+
+  table.awards-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    direction: rtl;
+    border: none;
+  }
+
+  table.awards-table thead th {
+    background: #5b8577; /* Sage green */
+    color: #fff;
+    padding: 20px 10px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+  }
+
+  /* Rounded corners for the header */
+  table.awards-table thead tr:first-child th:first-child { border-top-right-radius: 20px; }
+  table.awards-table thead tr:first-child th:last-child { border-top-left-radius: 20px; }
+  /* English swap */
+  table.awards-table.en thead tr:first-child th:first-child { border-top-right-radius: 0; border-top-left-radius: 20px; }
+  table.awards-table.en thead tr:first-child th:last-child { border-top-left-radius: 0; border-top-right-radius: 20px; }
+
+  table.awards-table thead th .label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .table-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .header-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Make icons white */
+  }
+
+  table.awards-table tbody td {
+    background: #ffffff;
+    padding: 14px 10px;
+    border: 0.5px solid #e1d6da;
+    text-align: center;
+    color: #000000;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  /* Category column background */
+  table.awards-table tbody td:first-child {
+    background: #f7f2f3;
+    font-weight: 700;
+  }
+
+  table.awards-table tbody tr:nth-child(even) td {
+    background: #fafafa;
+  }
+  table.awards-table tbody tr:nth-child(even) td:first-child {
+    background: #f1ebec;
+  }
+
+  table.awards-table.en { direction: ltr; }
+
+  .awards-section .footnote {
+    margin-top: 10px;
+    color: #043531;
+    background: #fdf9f4;
+    border: 1px solid #e8dcc8;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: .95rem;
+  }
+  /* Force table visibility when switching languages (works in static HTML). */
+  body[dir='rtl'] #awards-ar { display: table !important; }
+  body[dir='rtl'] #awards-en { display: none !important; }
+  body[dir='ltr'] #awards-en { display: table !important; }
+  body[dir='ltr'] #awards-ar { display: none !important; }
+  /* Footnotes and total note visibility bound to page direction */
+  body[dir='rtl'] #awards-footnote-ar { display: block !important; }
+  body[dir='rtl'] #awards-footnote-en { display: none !important; }
+  body[dir='rtl'] #awards-total-note-ar { display: block !important; }
+  body[dir='rtl'] #awards-total-note-en { display: none !important; }
+
+  body[dir='ltr'] #awards-footnote-ar { display: none !important; }
+  body[dir='ltr'] #awards-footnote-en { display: block !important; }
+  body[dir='ltr'] #awards-total-note-ar { display: none !important; }
+  body[dir='ltr'] #awards-total-note-en { display: block !important; }
+
+  /* About note visibility bound to page direction */
+  body[dir='rtl'] #about-note-ar { display: block !important; }
+  body[dir='rtl'] #about-note-en { display: none !important; }
+  body[dir='ltr'] #about-note-ar { display: none !important; }
+  body[dir='ltr'] #about-note-en { display: block !important; }
+    .about .footnote{margin-top:10px;color:#043531;background:#fff7f9;border:1px solid #e8cbd2;padding:10px 12px;border-radius:8px;font-size:.95rem}
+
+    /* --- Sheikha Rawda Section --- */
+    .sheikha-section{
+      position:relative;
+      margin:24px auto;
+      max-width:1200px;
+      width:calc(100% - 32px);
+      min-height:500px;
+      overflow:hidden;
+      border-radius:10px;
+    }
+    .sheikha-background{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+    }
+    .sheikha-bg-img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+    }
+    .sheikha-content-wrapper{
+      position:relative;
+      z-index:2;
+      min-height:500px;
+      display:flex;
+      align-items:stretch;
+    }
+    .sheikha-text-panel{
+      background:#d9c3a7;
+      color:#2b2b2b;
+      padding:40px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      width:40%;
+      margin-left:auto;
+      text-align:right;
+    }
+    body[dir='ltr'] .sheikha-text-panel{
+      margin-left:auto;
+      margin-right:0;
+      text-align:left;
+    }
+    .sheikha-title{
+      font-size:28px;
+      font-weight:800;
+      color:#043531;
+      margin:0 0 16px;
+      line-height:1.3;
+    }
+    .sheikha-subtitle{
+      font-size:16px;
+      font-weight:600;
+      margin:0 0 20px;
+      line-height:1.5;
+      color:#2b2b2b;
+    }
+    .sheikha-description{
+      font-size:16px;
+      line-height:1.9;
+      margin:0 0 24px;
+      color:#2b2b2b;
+      text-align:justify;
+    }
+    .sheikha-cta{
+      display:inline-block;
+      background:#043531;
+      color:#fff;
+      padding:12px 32px;
+      border-radius:50px;
+      text-decoration:none;
+      font-weight:700;
+      text-align:center;
+      align-self:center;
+      transition:background .3s ease;
+    }
+    .sheikha-cta:hover{
+      background:#065a54;
+      color:#fff;
+    }
+
+    /* --- Nomination Process Section --- */
+    .nomination-process-section{
+      position:relative;
+      margin:24px auto;
+      max-width:1200px;
+      width:calc(100% - 32px);
+      min-height:400px;
+      overflow:hidden;
+      border-radius:10px;
+    }
+    .nomination-bg{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+    }
+    .nomination-bg-img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+    }
+    .nomination-overlay{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(4,53,49,.75);
+      z-index:1;
+    }
+    .nomination-content{
+      position:relative;
+      z-index:2;
+      padding:40px;
+      color:#fff;
+      text-align:right;
+    }
+    body[dir='ltr'] .nomination-content{
+      text-align:left;
+    }
+    .nomination-title{
+      font-size:28px;
+      font-weight:800;
+      color:#d9c3a7;
+      margin:0 0 20px;
+      line-height:1.3;
+    }
+    .nomination-description{
+      font-size:16px;
+      line-height:1.8;
+      margin:0 auto;
+      max-width:900px;
+      color:#fff;
+    }
+
+
+    /* ========== RESPONSIVE BREAKPOINTS ========== */
+    
+    /* Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) {
+      .about-grid{grid-template-columns:1.2fr 1fr}
+     .hero-media .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25% !important}
+    }
+    
+    /* Medium devices (tablets, 768px to 991px) */
+    @media (max-width: 991px) {
+      .targets .items{grid-template-columns:repeat(3,1fr)}
+      .hero h1{font-size:32px}
+      .hero h2{font-size:24px}
+      .hero p{font-size:17px}
+      .hero{min-height: 65vh}
+      .hero-media .hero-img{object-fit:cover;object-position:20% top}
+      .sheikha-text-panel{width:50%;padding:30px;}
+      .sheikha-title{font-size:24px;}
+      .sheikha-subtitle{font-size:15px;}
+      .sheikha-description{font-size:15px;}
+      .targets-grid{grid-template-columns:repeat(3,1fr);gap:24px;}
+      .targets-new{padding:40px 24px;}
+      .targets-title{font-size:24px;}
+      .target-card{padding:30px 16px; border-radius: 100px 100px 30px 30px;}
+      .target-icon{width:70px;height:70px;}
+      .target-label{font-size:15px;}
+    }
+    
+    /* Small devices (landscape phones, 576px to 767px) */
+    @media (max-width: 767px) {
+      .header-wrapper .col-12.d-flex {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .site-options {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .logo {
+        justify-content: center;
+        width: 100%;
+      }
+      .hero {min-height: 70vh; padding: 30px 16px;}
+      .hero-media .hero-img{object-fit:cover;object-position:20% top}
+      .hero h1{font-size:28px}
+      .hero h2{font-size:22px}
+      .hero p{font-size:16px}
+      .section {margin: 16px auto; padding: 20px 12px;}
+      .section h3 {font-size: 22px;}
+      .targets .items{grid-template-columns:repeat(2,1fr)}
+      .badge{width:60px;height:60px;font-size:22px}
+      .item span{font-size:13px}
+      .about .header {padding: 20px 16px;}
+      .about .header h3 {font-size: 26px;}
+      .sheikha-section{min-height:400px;}
+      .sheikha-content-wrapper{min-height:400px;}
+      .sheikha-text-panel{width:100%;padding:24px;}
+      .sheikha-title{font-size:22px;}
+      .sheikha-subtitle{font-size:14px;}
+      .sheikha-description{font-size:14px;}
+      .targets-grid{grid-template-columns:repeat(2,1fr);gap:20px;}
+      .targets-new{padding:32px 16px;}
+      .targets-title{font-size:22px;margin-bottom:32px;}
+      .target-card{padding:24px 12px; border-radius: 90px 90px 25px 25px;}
+      .target-icon{width:60px;height:60px;}
+      .target-label{font-size:14px;}
+    }
+    
+    /* Extra small devices (portrait phones, less than 576px) */
+    @media (max-width: 575px) {
+      .hero {min-height: 75vh; padding: 20px 12px;}
+      .hero-media .hero-img{object-fit:cover;object-position:20% top}
+      .hero h1{font-size:24px}
+      .hero h2{font-size:20px}
+      .hero p{font-size:15px}
+      .cta {padding: 8px 14px; font-size: 14px;}
+      .section {padding: 16px 10px;}
+      .section h3 {font-size: 20px;}
+      .targets .items{grid-template-columns:1fr}
+      .badge{width:54px;height:54px;font-size:20px}
+      .item span{font-size:12px}
+      .about .header h3 {font-size: 22px;}
+      .about .bar {padding: 8px 12px; font-size: 16px;}
+      .site-options {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      .sheikha-section{min-height:350px;}
+      .sheikha-content-wrapper{min-height:350px;}
+      .sheikha-text-panel{padding:20px;}
+      .sheikha-title{font-size:20px;}
+      .sheikha-subtitle{font-size:13px;margin-bottom:16px;}
+      .sheikha-description{font-size:13px;line-height:1.7;}
+      .sheikha-cta{padding:10px 24px;font-size:14px;}
+      .targets-grid{grid-template-columns:1fr;gap:16px; max-width: 320px; margin: 0 auto;}
+      .targets-new{padding:28px 16px;}
+      .targets-title{font-size:20px;margin-bottom:28px;}
+      .diamond-icon{width:10px;height:10px;margin:0;}
+      .target-card{padding:24px 16px;border-radius:120px 120px 40px 40px;}
+      .target-icon{width:64px;height:64px;}
+      .target-label{font-size:14px;}
+    }
+    
+    /* Very small devices (less than 400px) */
+    @media (max-width: 400px) {
+      .hero h1{font-size:22px}
+      .hero h2{font-size:18px}
+      .hero p{font-size:14px}
+      .section h3 {font-size: 18px;}
+    }
+
+    /* Footer responsive adjustments */
+    @media (max-width: 767px) {
+      .footer-grid{flex-direction:column}
+      .c-info{min-width:auto;flex:1 1 100%}
+      .social-links {justify-content: center;}
+      .terms-link {justify-content: center;}
+    }
+
+    /* Fixed viewport mode — narrow layout */
+    .fixed-mode .header-wrapper,
+    .fixed-mode .footer-wrap,
+    .fixed-mode .section,
+    .fixed-mode .container,
+    .fixed-mode .hero .content{max-width:380px;margin-left:auto;margin-right:auto}
+    .fixed-mode .section{padding:16px 12px}
+    .fixed-mode .targets .items{grid-template-columns:1fr}
+    .fixed-mode .awards-table{min-width:560px}
+    /* Typographic tweaks in fixed mode */
+    .fixed-mode .hero h1{font-size:24px;margin-bottom:8px}
+    .fixed-mode .hero h2{font-size:20px;margin-bottom:12px}
+    .fixed-mode .hero p{font-size:15px;margin-bottom:16px}
+    .fixed-mode .cta{padding:8px 14px;font-size:14px}
+    .fixed-mode .note{font-size:15px}
+    </style>
+  </head>
+  <body dir="rtl">
+    <!-- Bootstrap JS bundle for collapse/modal to work -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+    <!-- Header copied structure from Drupal include/header.html.twig (staticized) -->
+    <div class="top-strip"></div>
+    <header>
+      <div class="header-wrapper">
+        <div class="row">
+          <div class="col-12 d-flex align-items-center justify-content-between">
+
+            <!-- Navigation removed to match second screenshot -->
+            <div class="site-options">
+              <div class="font-size" aria-label="تحكم حجم الخط">
+                <a href="javascript:void(0)" id="fsPlus" class="font-size-up"
+                  aria-label="تكبير حجم النص">A+</a>
+                <a href="javascript:void(0)" id="fsMinus" class="font-size-down"
+                  aria-label="تصغير حجم النص">A-</a>
+              </div>
+              <span class="language-switcher" id="language-switcher">العربية</span>
+              <!-- Search icon removed as requested -->
+            </div>
+            <div class="logo">
+              <a href="#" aria-label="Home">
+                <img src="logo/logo-email.png"
+                  class="small-logo"
+                  alt="Ministry of Social Development and Family">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search modal removed per request -->
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Hero Section">
+      <div class="hero-media"><img class="hero-img" src="Banners_images/Rawda_awards_landing.jpg" alt="Rawda Award"></div>
+      <div class="hero-overlay"></div>
+      <div class="content">
+        <div id="hero-ar" dir="rtl">
+          <h1>معاً نحتفي <span class="accent">بالتميّز</span> في العمل</h1>
+          <h2>الاجتماعي</h2>
+          <p>جائزة وطنية لدعم العطاء والمسؤولية الاجتماعية بما ينسجم مع رؤية قطر
+            الوطنية 2030.</p>
+          <p>تأسست جائزة روضة بموجب المرسوم الأميري رقم (16) لسنة 2025، وذلك
+            لتعزيز ثقافة العمل الاجتماعي في دولة قطر وتكريم الإنجازات المتميزة
+            في مجالات الأفراد والأسر والمنظمات غير الربحية والقطاع الخاص ووسائل
+            الإعلام.</p>
+          <p><a class="hero-link"
+              href="Amir.pdf"
+              target="_blank" rel="noopener">للاطلاع على القرار الأميري</a></p>
+          <a class="cta" href="#about">اقرأ المزيد</a>
+        </div>
+        <div id="hero-en" dir="ltr" style="display:none">
+          <h1>Together we celebrate <span class="accent">excellence</span> in social</h1>
+          <h2>work</h2>
+          <p>A national award to support giving and social responsibility in
+            line with Qatar National Vision 2030.</p>
+          <p>The Rawda Award was established pursuant to Amiri Decree No. (16)
+            of 2025, to promote a culture of social work in the State of Qatar
+            and to honor outstanding achievements in the fields of individuals,
+            families, non-profit organizations, the private sector, and the
+            media.</p>
+          <p><a class="hero-link"
+              href="Amir.pdf"
+              target="_blank" rel="noopener">View the Amiri Decree</a></p>
+          <a class="cta" href="#about">Read more</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Sheikha Rawda Section with Banner Background -->
+    <section class="sheikha-section" aria-label="About Sheikha Rawda" id="sheikha">
+      <div class="sheikha-background">
+        <img src="Banners_Images/Rawda_awards_Sheikha Rawda_Banner.jpg" alt="Sheikha Rawda Banner" class="sheikha-bg-img">
+      </div>
+      <div class="sheikha-content-wrapper">
+        <div class="sheikha-text-panel" id="sheikha-panel-ar" dir="rtl">
+          <h3 class="sheikha-title">نبذة عن الشيخة روضة</h3>
+          <p class="sheikha-subtitle">الشيخة روضة بنت محمد بن ثاني<br>(1870م – 1920م)</p>
+          <p class="sheikha-description">
+            إحدى الشخصيات النسائية البارزة في تاريخ قطر، تنتمي إلى الأسرة الحاكمة وهي شقيقة المؤسس الشيخ جاسم بن محمد آل ثاني. اشتهرت بالكرم والعمل الخيري، وكانت "زوجة شهيد وأم شهيد" إذ استشهد زوجها وابنها في معارك وطنية أمام أفراد الأسرة الحاكمة، وتعتبر من أفراد الأسرة الحاكمة الذين يتفاخرون بلقب "إخوان روضة". تركت إرثًا إنسانيًا وتاريخيًا خالدًا في المجتمع القطري.
+          </p>
+          <a href="Shekha.pdf" target="_blank" rel="noopener" class="sheikha-cta">للمزيد</a>
+        </div>
+        <div class="sheikha-text-panel" id="sheikha-panel-en" dir="ltr" style="display:none">
+          <h3 class="sheikha-title">About Sheikha Rawda</h3>
+          <p class="sheikha-subtitle">Sheikha Rawda bint Mohammed bin Thani<br>(1870 – 1920)</p>
+          <p class="sheikha-description">
+            One of the prominent female figures in Qatar's history, she belonged to the ruling family and was the sister of the founder, Sheikh Jassim bin Mohammed Al Thani. She was known for her generosity and charitable work and was called the "wife of a martyr and mother of a martyr," as both her husband and son were martyred in national battles. She is the grandmother of several members of the ruling family, who proudly honor her with the title "Ikhwan Rawda" (Rawda's brothers). She left an enduring humanitarian and historical legacy in Qatari society.
+          </p>
+          <a href="Shekha.pdf" target="_blank" rel="noopener" class="sheikha-cta">Read More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Targets - New Design -->
+    <section class="section targets-new" aria-label="Target groups" id="targets">
+      <h3 class="targets-title">
+        <span class="diamond-icon"></span>
+        <span id="targets-title-text">الفئات المستهدفة</span>
+        <span class="diamond-icon"></span>
+      </h3>
+      <div class="targets-grid" dir="rtl" id="targets-ar">
+        <div class="target-card">
+          <img src="icons/300ppi/people-icon.png" alt="الأفراد" class="target-icon">
+          <span class="target-label">الأفراد</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/family-icon.png" alt="الأسرة" class="target-icon">
+          <span class="target-label">الأسرة</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/non-profit-icon.png" alt="المنظمات غير الربحية" class="target-icon">
+          <span class="target-label">المنظمات<br>غير الربحية</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/private-sector-icon.png" alt="القطاع الخاص" class="target-icon">
+          <span class="target-label">القطاع الخاص</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/media-icon.png" alt="الإعلام" class="target-icon">
+          <span class="target-label">الإعلام</span>
+        </div>
+      </div>
+      <div class="targets-grid" dir="ltr" id="targets-en" style="display:none">
+        <div class="target-card">
+          <img src="icons/300ppi/people-icon.png" alt="Individuals" class="target-icon">
+          <span class="target-label">Individuals</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/family-icon.png" alt="Families" class="target-icon">
+          <span class="target-label">Families</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/non-profit-icon.png" alt="Non-profit organizations" class="target-icon">
+          <span class="target-label">Non-profit<br>organizations</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/private-sector-icon.png" alt="Private sector" class="target-icon">
+          <span class="target-label">Private sector</span>
+        </div>
+        <div class="target-card">
+          <img src="icons/300ppi/media-icon.png" alt="Media" class="target-icon">
+          <span class="target-label">Media</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Award Levels and Values -->
+    <section class="section awards-section" aria-label="Award Levels and Values" id="about">
+      <h3 class="awards-section-title">
+        <span class="diamond-icon"></span>
+        <span id="awards-title-text">مستويات وقيمة الجوائز</span>
+        <span class="diamond-icon"></span>
+      </h3>
+      <div class="list" id="awards-list" aria-label="Awards list">
+        <div class="note" id="about-note-ar" dir="rtl">ملاحظة توضيحية قصيرة حول
+          معايير الجائزة.</div>
+        <div class="note" id="about-note-en" dir="ltr" style="display:none">A
+          brief explanatory note about the award criteria.</div>
+        <div class="table-wrap">
+          <!-- AR table (moved under About section) -->
+          <table class="awards-table" id="awards-ar" dir="rtl">
+            <thead>
+              <tr>
+                <th>الفئة</th>
+                <th>
+                  <div class="table-header-content">
+                    <img class="header-icon" src="icons/300ppi/trophy-icon.png" alt="جائزة">
+                    <span class="label">المستوى الأول<br>جائزة روضة</span>
+                  </div>
+                </th>
+                <th>
+                  <div class="table-header-content">
+                    <img class="header-icon" src="icons/300ppi/shield-icon.png" alt="درع">
+                    <span class="label">المستوى الثاني<br>درع الإتقان</span>
+                  </div>
+                </th>
+                <th>
+                  <div class="table-header-content">
+                    <img class="header-icon" src="icons/300ppi/certificate-icon.png" alt="شهادة">
+                    <span class="label">المستوى الثالث<br>شهادة التقدير</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr>
+                <td>الأفراد</td>
+                <td>تكريم + ٣٠٠ ألف ريال</td>
+                <td>تكريم + ٢٠٠ ألف ريال</td>
+                <td>تكريم + ١٠٠ ألف ريال</td>
+              </tr>
+              <tr>
+                <td>الأسرة</td>
+                <td>تكريم + ٤٠٠ ألف ريال</td>
+                <td>تكريم + ٣٠٠ ألف ريال</td>
+                <td>تكريم + ٢٠٠ ألف ريال</td>
+              </tr>
+              <tr>
+                <td>المؤسسات غير الربحية</td>
+                <td>تكريم + ٥٠٠ ألف ريال</td>
+                <td>تكريم + ٤٠٠ ألف ريال</td>
+                <td>تكريم + ٣٠٠ ألف ريال</td>
+              </tr>
+              <tr>
+                <td>القطاع الخاص</td>
+                <td>تكريم</td>
+                <td>تكريم</td>
+                <td>تكريم</td>
+              </tr>
+              <tr>
+                <td>الإعلام</td>
+                <td>تكريم</td>
+                <td>تكريم</td>
+                <td>تكريم</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>الإجمالي</td>
+                <td>١٬٥٠٠ ألف ريال</td>
+                <td>١٬٢٠٠ ألف ريال</td>
+                <td>٩٠٠ ألف ريال</td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <!-- EN table (moved under About section) -->
+          <table class="awards-table en" id="awards-en" dir="ltr"
+            style="display:none">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>
+                  <div class="table-header-content">
+                    <img class="header-icon" src="icons/300ppi/trophy-icon.png" alt="Award">
+                    <span class="label">First Level<br>Rawda Award</span>
+                  </div>
+                </th>
+                <th>
+                  <div class="table-header-content">
+                    <img class="header-icon" src="icons/300ppi/shield-icon.png" alt="Shield">
+                    <span class="label">Second Level<br>Shield of Perfection</span>
+                  </div>
+                </th>
+                <th>
+                  <div class="table-header-content">
+                    <img class="header-icon" src="icons/300ppi/certificate-icon.png" alt="Certificate">
+                    <span class="label">Third Level<br>Certificate of Appreciation</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr>
+                <td>Individuals</td>
+                <td>Honoring + 300k QAR</td>
+                <td>Honoring + 200k QAR</td>
+                <td>Honoring + 100k QAR</td>
+              </tr>
+              <tr>
+                <td>Families</td>
+                <td>Honoring + 400k QAR</td>
+                <td>Honoring + 300k QAR</td>
+                <td>Honoring + 200k QAR</td>
+              </tr>
+              <tr>
+                <td>Non-profit organizations</td>
+                <td>Honoring + 500k QAR</td>
+                <td>Honoring + 400k QAR</td>
+                <td>Honoring + 300k QAR</td>
+              </tr>
+              <tr>
+                <td>Private sector</td>
+                <td>Recognition</td>
+                <td>Recognition</td>
+                <td>Recognition</td>
+              </tr>
+              <tr>
+                <td>Media</td>
+                <td>Recognition</td>
+                <td>Recognition</td>
+                <td>Recognition</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Total</td>
+                <td>1,500k QAR</td>
+                <td>1,200k QAR</td>
+                <td>900k QAR</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Footnote copied to match node 542 wording -->
+        <div class="footnote" id="awards-footnote-ar" dir="rtl">
+          تُقسّم كل فئة إلى ثلاثة مستويات (بإجمالي 15 جائزة). ويمكن للمشاركين
+          الفوز في فئات مختلفة عبر سنوات متعددة وفق معايير محددة والأثر
+          الاجتماعي.
+        </div>
+        <div class="footnote" id="awards-footnote-en" dir="ltr"
+          style="display:none">
+          Each category is divided into three levels (a total of 15 awards).
+          Participants may win across different categories in multiple years
+          based on specific criteria and social impact.
+        </div>
+
+        <!-- Total award value note -->
+        <div class="note" id="awards-total-note-ar"
+          style="text-align:center;margin-top:12px;" dir="rtl">
+          <strong style="color:#043531;">القيمة الإجمالية للجوائز</strong>
+          <div
+            style="background:#efe8b1;border:1px solid #c9bf6a;border-radius:6px;padding:8px 12px;display:inline-block;margin-top:6px;">٢٬٧٠٠٬٠٠٠
+            ريال سنوياً</div>
+        </div>
+        <div class="note" id="awards-total-note-en"
+          style="text-align:center;margin-top:12px;display:none;" dir="ltr">
+          <strong style="color:#043531;">Total award value</strong>
+          <div
+            style="background:#efe8b1;border:1px solid #c9bf6a;border-radius:6px;padding:8px 12px;display:inline-block;margin-top:6px;">QAR
+            2,700,000 annually</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nomination Process Section (merged with conditions and evaluation) -->
+    <section class="nomination-process-section" aria-label="Nomination Process" id="nomination-process">
+      <!-- Banner Header -->
+      <div class="nomination-bg">
+        <img src="Banners_Images/Rawda awards landing page3_Main Banner-Page 2.jpg" alt="Nomination Process" class="nomination-bg-img">
+      </div>
+      <div class="nomination-overlay"></div>
+      <div class="nomination-content">
+        <!-- Arabic Content -->
+        <div id="nomination-header-ar" dir="rtl">
+          <h3 class="nomination-title">آلية وجهات الترشيح للجائزة</h3>
+          <div class="nomination-description">
+            <p>يتولى الخبراء المختصين بالترشيح والجهات الرسمية، في مجالات العمل الاجتماعي والمبادرات المجتمعية والمساهمات المجتمعية والإعلام، ترشيح الأفراد والأسر والمؤسسات والمشاريع التي ترى أنها تستحق المنافسة على جائزة روضة للتميز في العمل الاجتماعي، وذلك استنادًا إلى خبراتها المهنية ودورها المباشر في متابعة المبادرات ذات الأثر الوطني.</p>
+            <p>ويقدم هؤلاء الخبراء والجهات بالإضافة لفريق الرصد والتقييم في الفريق التنفيذي للجائزة قوائم الترشيح مرفقة بتقارير توضح مبررات الاختيار إلى لجنة أمناء الجائزة، ويجوز للجنة طلب أي مواد داعمة أو وثائق إضافية، كما يجوز لها الاعتذار عن قبول الترشيح في حال عدم استيفائه معايير الجائزة أو وضوحه خارج نطاق الصلاحيات المقررة للجهة المرشحة.</p>
+          </div>
+        </div>
+        <!-- English Content -->
+        <div id="nomination-header-en" dir="ltr" style="display:none">
+          <h3 class="nomination-title">Nomination Process and Entities</h3>
+          <div class="nomination-description">
+            <p>Experts specializing in nominations and official bodies in the fields of social work, community initiatives, community contributions, and media nominate individuals, families, institutions, and projects they deem worthy of competing for the Rawda Award for Excellence in Social Work. This nomination is based on their professional experience and direct role in monitoring initiatives with national impact.</p>
+            <p>These experts and bodies, along with the monitoring and evaluation team within the award's executive team, submit nomination lists accompanied by reports explaining the rationale for selection to the award's Board of Trustees. The Board may request any supporting materials or additional documents and may decline a nomination if it does not meet the award criteria or if it clearly falls outside the scope of the nominating entity's mandate.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nomination Conditions and Evaluation (white background section) -->
+    <section class="section" aria-label="Nomination Conditions and Evaluation"
+      id="nomination-conditions">
+      <!-- Nomination Conditions -->
+      <div class="section-header-wrapper">
+        <span class="bar" id="nc-title">شروط الترشيح</span>
+      </div>
+      <div id="nc-ar" dir="rtl">
+        <ol>
+          <li>أن يكون المرشّح (فرد/أسرة/مؤسسة/شركة/جهة إعلامية) مقيمًا أو مسجّلًا رسميًا في دولة قطر.</li>
+          <li>تقديم شهادة حسن السيرة والسلوك من الجهات الرسمية في دولة قطر لكل مرشح/ مرشحين.</li>
+          <li>أن يكون المشروع أو المبادرة قد نُفذ منذ سنة على الأقل أو (استثناءً خلال آخر 3 سنوات للدورة الأولى).</li>
+          <li>أن تُظهر المبادرة أثرًا اجتماعيًا مثبتًا وتلتزم بالقيم المجتمعية القطرية.</li>
+          <li>ألا تهدف المبادرة إلى تحقيق أرباح مالية مباشرة أو تجارية.</li>
+          <li>ألا يكون المرشح/ المرشحين قد حصل على الجائزة نفسها خلال آخر دورتين متتاليتين.</li>
+        </ol>
+      </div>
+      <div id="nc-en" dir="ltr" style="display:none">
+        <ol>
+          <li>The candidate (individual/family/institution/company/media entity) must be a resident or officially registered in the State of Qatar.</li>
+          <li>Submit a certificate of good conduct from official authorities in the State of Qatar for each candidate(s).</li>
+          <li>The project or initiative must have been implemented for at least one year, or (exceptionally within the last 3 years for the first cycle).</li>
+          <li>The initiative must demonstrate a proven social impact and adhere to Qatari societal values.</li>
+          <li>The initiative must not aim to achieve direct financial or commercial profits.</li>
+          <li>The candidate(s) must not have received the same award during the last two consecutive cycles.</li>
+        </ol>
+      </div>
+      
+      <!-- Evaluation and Judging (within same section) -->
+      <div class="section-header-wrapper" style="margin-top:32px;">
+        <span class="bar" id="ej-title">آلية التقييم والتحكيم</span>
+      </div>
+      <div id="ej-ar" dir="rtl">
+        <ol>
+          <li>يتم استكمال نموذج البيانات الخاص بالمبادرة أو المرشّح، ويشمل السيرة المختصرة، ووثائق الأثر الاجتماعي، والمواد التوضيحية.</li>
+          <li>تُدَقَّق الملفات للتأكد من اكتمال المتطلبات وصحة البيانات قبل إحالتها للمراجعة الفنية.</li>
+          <li>تُقَيَّم جودة المبادرة وأثرها وفق معايير الجائزة واشتراطات كل فئة ومستوى.</li>
+          <li>تُرفع نتائج التحكيم الفني إلى لجنة أمناء الجائزة لاعتماد الفائزين بحسب المستويات والفئات.</li>
+          <li>تُبلغ الجهات المرشَّحة والمتقدمون بالنتائج بعد اعتمادها وفق الإجراءات المعتمدة.</li>
+          <li>تُعلن النتائج في الحفل الختامي للجائزة، ويُمنح الفائزون حق استخدام الشعار ضمن الضوابط الإعلامية.</li>
+        </ol>
+      </div>
+      <div id="ej-en" dir="ltr" style="display:none">
+        <ol>
+          <li>Complete the data form for the initiative or candidate, including a brief biography, social impact documents, and explanatory materials.</li>
+          <li>Files are audited to ensure completeness of requirements and accuracy of data before being referred for technical review.</li>
+          <li>The quality and impact of the initiative are evaluated according to the award criteria and the requirements of each category and level.</li>
+          <li>Technical judging results are submitted to the Award’s Board of Trustees to approve winners according to levels and categories.</li>
+          <li>Nominated entities and applicants are notified of the results after their approval according to adopted procedures.</li>
+          <li>Results are announced at the final ceremony of the award, and winners are granted the right to use the logo within media regulations.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Download Nomination Form (commented out for now)
+    <section class="section" aria-label="Download Nomination Form" id="nomination-form">
+      <div style="text-align:center;margin-top:4px;">
+        <a href="nomination-form.pdf" target="_blank" rel="noopener" class="bar"
+          id="nf-title" style="text-decoration:none;">تحميل استمارة الترشيح</a>
+      </div>
+    </section> -->
+
+    <!-- iPhone mode lock script -->
+    <script>
+    (function(){
+      const BODY = document.body;
+      const HTML = document.documentElement;
+      const mq = window.matchMedia('(max-width: 600px)');
+      const params = new URLSearchParams(location.search);
+      let locked = false;
+
+      function enableIphoneMode(){
+        BODY.classList.add('iphone-mode');
+        HTML.classList.add('iphone-mode');
+        locked = true;
+      }
+      function maybeToggle(){
+        if (locked) return;
+        if (mq.matches) {
+          enableIphoneMode();
+        } else {
+          BODY.classList.remove('iphone-mode');
+          HTML.classList.remove('iphone-mode');
+        }
+      }
+
+      // Force via query param: ?mode=iphone
+      if (params.get('mode') === 'iphone') {
+        enableIphoneMode();
+      } else if (mq.matches) {
+        // If page loads in iPhone width, lock it and never revert on resize
+        enableIphoneMode();
+      } else {
+        maybeToggle();
+      }
+
+      window.addEventListener('resize', maybeToggle);
+      // Optional manual unlock for debugging (not exposed in UI)
+      window.unlockIphoneMode = function(){ locked = false; BODY.classList.remove('iphone-mode'); HTML.classList.remove('iphone-mode'); maybeToggle(); };
+    })();
+  </script>
+
+    <!-- Footer (MSDF theme markup, staticized) -->
+    <footer>
+      <div class="container-lg">
+        <div class="row">
+          <div class="col-12 col-lg-8">
+            <div class="row">
+              <div class="col-12 mb-5 pb-5 get-in-touch">
+                <span class="footer-title mb-2" id="footer-title"
+                  style="font-size:20px;">تواصل معنا</span>
+                <p class="mb-0" id="footer-ministry">وزارة التنمية الاجتماعية
+                  والأسرة</p>
+              </div>
+
+              <div class="col-6 col-md-4 col-lg-3 c-info">
+                <img id="phone-icon"
+                  src="images/phone-icon.svg"
+                  alt="الهاتف">
+                <p class="contacts-style">
+                  <span id="phone-label">الهاتف</span>
+                  <span>
+                    <a aria-label="phone number 16003" href="tel:16003">16003</a>
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-6 col-md-4 col-lg-3 c-info">
+                <img id="email-icon"
+                  src="images/email-icon.svg"
+                  alt="البريد الإلكتروني">
+                <p class="contacts-style">
+                  <span id="email-label">البريد الإلكتروني</span>
+                  <span>
+                    <a id="email-value" aria-label="Email Info@Rawdaaward.qa"
+                      href="mailto:Info@Rawdaaward.qa">Info@Rawdaaward.qa</a>
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-6 col-md-4 col-lg-3 c-info">
+                <img id="location-icon"
+                  src="images/location-icon.svg"
+                  alt="الموقع">
+                <p class="contacts-style">
+                  <span id="location-label">الموقع</span>
+                  <span>
+                    <a id="location-value" aria-label="جائزة الروضة"
+                      href="https://maps.app.goo.gl/mqsMSvu48wzTt6cH8?g_st=ipc"
+                      target="_blank" rel="noopener noreferrer">جائزة الروضة</a>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4 footer-right">
+            <div class="footer-logo clearfix mb-2">
+              <img id="footer-logo"
+                src="logo/footer-logo-ar.svg"
+                class="img-fluid"
+                alt="Ministry of Social Development and Family logo">
+            </div>
+            <div class="social-links mt-lg-5">
+              <a href="https://twitter.com/MSDF_Qatar" target="_blank"
+                rel="noopener noreferrer"><span><img class="social-icon"
+                    src="images/social/x.svg" alt="Twitter/X"> Twitter</span></a>
+              <a href="https://www.instagram.com/MSDF_Qatar/" target="_blank"
+                rel="noopener noreferrer"><span><img class="social-icon"
+                    src="images/social/instagram.svg" alt="Instagram"> Instagram</span></a>
+              <a href="https://www.youtube.com/@MSDF_Qatar" target="_blank"
+                rel="noopener noreferrer"><span><img class="social-icon"
+                    src="images/social/youtube.svg" alt="YouTube"> YouTube</span></a>
+              <a href="https://www.linkedin.com/company/msdfqatar"
+                target="_blank" rel="noopener noreferrer"><span><img
+                    class="social-icon" src="images/social/linkedin.svg"
+                    alt="LinkedIn"> LinkedIn</span></a>
+              <a href="https://www.tiktok.com/@msdfqatar?_t=8p1VfG1aQCG&_r=1"
+                target="_blank" rel="noopener noreferrer"><span><img
+                    class="social-icon" src="images/social/tiktok.svg"
+                    alt="TikTok"> TikTok</span></a>
+              <a href="https://whatsapp.com/channel/0029VapQln047Xe7BL8Eg91Y"
+                target="_blank" rel="noopener noreferrer"><span><img
+                    class="social-icon" src="images/social/whatsapp.svg"
+                    alt="WhatsApp"> WhatsApp</span></a>
+              <a href="https://www.snapchat.com/@msdfqatar" target="_blank"
+                rel="noopener noreferrer"><span><img class="social-icon"
+                    src="images/social/snapchat.svg" alt="Snapchat"> Snapchat</span></a>
+            </div>
+            <div class="mt-lg-5">
+              <a target="_blank" rel="noopener noreferrer"
+                href="https://monitor.mada.org.qa/website/ar/N1EuEczqIXmhWhrWDdYIXALNseSGpmAc5vGQejSV4WhaNJ9gOpNDTU0hqGbI">
+                <img id="mada-badge-img"
+                  src="https://monitor.mada.org.qa/acc/ar/N1EuEczqIXmhWhrWDdYIXALNseSGpmAc5vGQejSV4WhaNJ9gOpNDTU0hqGbI"
+                  alt="اعتماد مدى للنفاذ الرقمي">
+                <span id="mada-badge-label" class="contacts-style px-2">معتمد
+                  بواسطة مدى</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <ul
+              class="terms-link d-flex justify-content-start mt-lg-5 pt-lg-5 mb-5">
+              <li><a id="privacy-link" href="#">سياسة الخصوصية</a></li>
+              <li><a id="terms-link" href="#">شروط الاستخدام</a></li>
+              <li><a id="cookie-link" href="#">تفضيلات الكوكيز</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-lower">
+        <div class="container-lg">
+          <p>&copy; <span id="rights-year"></span> Ministry of Social
+            Development and Family - All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <a aria-label="bottom scroll to top" href="javascript:void(0)"
+      class="to-top">
+      <i class="fa-solid fa-caret-up" aria-hidden="true"></i>
+    </a>
+
+    <script>
+    // Font size controls (A+/A- with fsPlus/fsMinus ids)
+    (function(){
+      let fsScale = 1;
+      const applyFs = () => { document.body.style.fontSize = (16 * fsScale) + 'px'; };
+      const plus = document.getElementById('fsPlus');
+      const minus = document.getElementById('fsMinus');
+      if (plus) plus.addEventListener('click', e => { e.preventDefault(); fsScale = Math.min(1.6, fsScale + 0.1); applyFs(); });
+      if (minus) minus.addEventListener('click', e => { e.preventDefault(); fsScale = Math.max(0.85, fsScale - 0.1); applyFs(); });
+    })();
+
+    // Language toggle via text label (matches Drupal design)
+    const showAr = () => {
+      document.documentElement.setAttribute('lang','ar');
+      document.body.setAttribute('dir','rtl');
+      document.documentElement.setAttribute('lang','ar');
+      document.body.setAttribute('dir','rtl');
+      const heroAr = document.getElementById('hero-ar'); if (heroAr) heroAr.style.display='block';
+      const heroEn = document.getElementById('hero-en'); if (heroEn) heroEn.style.display='none';
+      const sheikhaPanelAr = document.getElementById('sheikha-panel-ar'); if (sheikhaPanelAr) sheikhaPanelAr.style.display='flex';
+      const sheikhaPanelEn = document.getElementById('sheikha-panel-en'); if (sheikhaPanelEn) sheikhaPanelEn.style.display='none';
+      const levelsAr = document.getElementById('levels-bar-ar'); if (levelsAr) levelsAr.style.display='inline-block';
+      const levelsEn = document.getElementById('levels-bar-en'); if (levelsEn) levelsEn.style.display='none';
+      const awardsTitleText = document.getElementById('awards-title-text'); if (awardsTitleText) awardsTitleText.textContent = 'مستويات وقيمة الجوائز';
+      const awardsNoteAr = document.getElementById('about-note-ar'); if (awardsNoteAr) awardsNoteAr.style.display='block';
+      const awardsNoteEn = document.getElementById('about-note-en'); if (awardsNoteEn) awardsNoteEn.style.display='none';
+      const targetsTitleText = document.getElementById('targets-title-text'); if (targetsTitleText) targetsTitleText.textContent = 'الفئات المستهدفة';
+      const targetsAr = document.getElementById('targets-ar'); if (targetsAr) targetsAr.style.display='grid';
+      const targetsEn = document.getElementById('targets-en'); if (targetsEn) targetsEn.style.display='none';
+      const nominationHeaderAr = document.getElementById('nomination-header-ar'); if (nominationHeaderAr) nominationHeaderAr.style.display='block';
+      const nominationHeaderEn = document.getElementById('nomination-header-en'); if (nominationHeaderEn) nominationHeaderEn.style.display='none';
+      const ncTitle = document.getElementById('nc-title'); if (ncTitle) ncTitle.textContent = 'شروط الترشيح';
+      const ejTitle = document.getElementById('ej-title'); if (ejTitle) ejTitle.textContent = 'آلية التقييم والتحكيم';
+      // const nfTitle = document.getElementById('nf-title'); if (nfTitle) nfTitle.textContent = 'تحميل استمارة الترشيح';
+      const ncAr = document.getElementById('nc-ar'); if (ncAr) ncAr.style.display='block';
+      const ncEn = document.getElementById('nc-en'); if (ncEn) ncEn.style.display='none';
+      const ejAr = document.getElementById('ej-ar'); if (ejAr) ejAr.style.display='block';
+      const ejEn = document.getElementById('ej-en'); if (ejEn) ejEn.style.display='none';
+      const nfAr = document.getElementById('nf-ar'); if (nfAr) nfAr.style.display='block';
+      const nfEn = document.getElementById('nf-en'); if (nfEn) nfEn.style.display='none';
+      document.getElementById('email-label').textContent='البريد الإلكتروني';
+      const phoneLabel = document.getElementById('phone-label');
+      const footerTitle = document.getElementById('footer-title');
+      const footerMinistry = document.getElementById('footer-ministry');
+      const privacyLink = document.getElementById('privacy-link');
+      const termsLink = document.getElementById('terms-link');
+      const cookieLink = document.getElementById('cookie-link');
+      if (phoneLabel) phoneLabel.textContent = 'الهاتف';
+      if (footerTitle) footerTitle.textContent = 'تواصل معنا';
+      if (footerMinistry) footerMinistry.textContent = 'وزارة التنمية الاجتماعية والأسرة';
+      if (privacyLink) privacyLink.textContent = 'سياسة الخصوصية';
+      if (termsLink) termsLink.textContent = 'شروط الاستخدام';
+      if (cookieLink) cookieLink.textContent = 'تفضيلات الكوكيز';
+      const locLabel = document.getElementById('location-label');
+      const locValue = document.getElementById('location-value');
+      if (locLabel) locLabel.textContent = 'الموقع';
+      if (locValue) { locValue.textContent = 'جائزة الروضة'; locValue.setAttribute('aria-label','جائزة الروضة'); }
+      // Footer icons and Mada badge (Arabic)
+      const phoneIconAr = document.getElementById('phone-icon');
+      const emailIconAr = document.getElementById('email-icon');
+      const locationIconAr = document.getElementById('location-icon');
+      if (phoneIconAr) phoneIconAr.alt = 'الهاتف';
+      if (emailIconAr) emailIconAr.alt = 'البريد الإلكتروني';
+      if (locationIconAr) locationIconAr.alt = 'الموقع';
+      const madaImgAr = document.getElementById('mada-badge-img');
+      const madaLabelAr = document.getElementById('mada-badge-label');
+      if (madaImgAr) madaImgAr.alt = 'اعتماد مدى للنفاذ الرقمي';
+      if (madaLabelAr) madaLabelAr.textContent = 'معتمد بواسطة مدى';
+      // Show the other language in the switcher so users can toggle to it
+      document.getElementById('language-switcher').textContent='English';
+      // List wrapper direction and label
+      const awardsList = document.getElementById('awards-list');
+      if (awardsList) { awardsList.setAttribute('dir','rtl'); awardsList.setAttribute('aria-label','قائمة الجوائز'); }
+      // Awards tables
+      document.getElementById('awards-ar').style.display='table';
+      document.getElementById('awards-en').style.display='none';
+      const ap = document.getElementById('awards-panel-en');
+      const at = document.getElementById('awards-total-en');
+      if (ap) ap.style.display='none';
+      if (at) at.style.display='none';
+      // Awards footnote and total note
+      const fna = document.getElementById('awards-footnote-ar');
+      const fne = document.getElementById('awards-footnote-en');
+      const tna = document.getElementById('awards-total-note-ar');
+      const tne = document.getElementById('awards-total-note-en');
+      if (fna) fna.style.display = 'block';
+      if (fne) fne.style.display = 'none';
+      if (tna) tna.style.display = 'block';
+      if (tne) tne.style.display = 'none';
+      // Footer logo
+      const flogo = document.getElementById('footer-logo');
+      if (flogo) { flogo.src = 'logo/footer-logo-ar.svg'; }
+    };
+    const showEn = () => {
+      document.documentElement.setAttribute('lang','en');
+      document.body.setAttribute('dir','ltr');
+      const heroAr = document.getElementById('hero-ar'); if (heroAr) heroAr.style.display='none';
+      const heroEn = document.getElementById('hero-en'); if (heroEn) heroEn.style.display='block';
+      const sheikhaPanelAr = document.getElementById('sheikha-panel-ar'); if (sheikhaPanelAr) sheikhaPanelAr.style.display='none';
+      const sheikhaPanelEn = document.getElementById('sheikha-panel-en'); if (sheikhaPanelEn) sheikhaPanelEn.style.display='flex';
+      const levelsAr = document.getElementById('levels-bar-ar'); if (levelsAr) levelsAr.style.display='none';
+      const levelsEn = document.getElementById('levels-bar-en'); if (levelsEn) levelsEn.style.display='inline-block';
+      const awardsTitleText = document.getElementById('awards-title-text'); if (awardsTitleText) awardsTitleText.textContent = 'Award Levels and Values';
+      const awardsNoteAr = document.getElementById('about-note-ar'); if (awardsNoteAr) awardsNoteAr.style.display='none';
+      const awardsNoteEn = document.getElementById('about-note-en'); if (awardsNoteEn) awardsNoteEn.style.display='block';
+      const targetsTitleText = document.getElementById('targets-title-text'); if (targetsTitleText) targetsTitleText.textContent = 'Award Categories';
+      const targetsAr = document.getElementById('targets-ar'); if (targetsAr) targetsAr.style.display='none';
+      const targetsEn = document.getElementById('targets-en'); if (targetsEn) targetsEn.style.display='grid';
+      const nominationHeaderAr = document.getElementById('nomination-header-ar'); if (nominationHeaderAr) nominationHeaderAr.style.display='none';
+      const nominationHeaderEn = document.getElementById('nomination-header-en'); if (nominationHeaderEn) nominationHeaderEn.style.display='block';
+      const ncTitle = document.getElementById('nc-title'); if (ncTitle) ncTitle.textContent = 'Nomination Conditions';
+      const ejTitle = document.getElementById('ej-title'); if (ejTitle) ejTitle.textContent = 'Evaluation and Judging';
+      const nfTitle = document.getElementById('nf-title'); if (nfTitle) nfTitle.textContent = 'Download Nomination Form';
+      const ncAr = document.getElementById('nc-ar'); if (ncAr) ncAr.style.display='none';
+      const ncEn = document.getElementById('nc-en'); if (ncEn) ncEn.style.display='block';
+      const ejAr = document.getElementById('ej-ar'); if (ejAr) ejAr.style.display='none';
+      const ejEn = document.getElementById('ej-en'); if (ejEn) ejEn.style.display='block';
+      // const nfAr = document.getElementById('nf-ar'); if (nfAr) nfAr.style.display='none';
+      // const nfEn = document.getElementById('nf-en'); if (nfEn) nfEn.style.display='block';
+      document.getElementById('email-label').textContent='Email';
+      const phoneLabel = document.getElementById('phone-label');
+      const footerTitle = document.getElementById('footer-title');
+      const footerMinistry = document.getElementById('footer-ministry');
+      const privacyLink = document.getElementById('privacy-link');
+      const termsLink = document.getElementById('terms-link');
+      const cookieLink = document.getElementById('cookie-link');
+      if (phoneLabel) phoneLabel.textContent = 'Phone';
+      if (footerTitle) footerTitle.textContent = 'Contact Us';
+      if (footerMinistry) footerMinistry.textContent = 'Ministry of Social Development and Family';
+      if (privacyLink) privacyLink.textContent = 'Privacy Policy';
+      if (termsLink) termsLink.textContent = 'Terms of Use';
+      if (cookieLink) cookieLink.textContent = 'Cookie Preferences';
+      const locLabel = document.getElementById('location-label');
+      const locValue = document.getElementById('location-value');
+      if (locLabel) locLabel.textContent = 'Location';
+      if (locValue) { locValue.textContent = 'Doha, Qatar — Rawda Award'; locValue.setAttribute('aria-label','Location: Doha, Qatar — Rawda Award'); }
+      // Footer icons and Mada badge (English)
+      const phoneIconEn = document.getElementById('phone-icon');
+      const emailIconEn = document.getElementById('email-icon');
+      const locationIconEn = document.getElementById('location-icon');
+      if (phoneIconEn) phoneIconEn.alt = 'Phone';
+      if (emailIconEn) emailIconEn.alt = 'Email';
+      if (locationIconEn) locationIconEn.alt = 'Location';
+      const madaImgEn = document.getElementById('mada-badge-img');
+      const madaLabelEn = document.getElementById('mada-badge-label');
+      if (madaImgEn) madaImgEn.alt = 'Mada Digital Accessibility Accreditation';
+      if (madaLabelEn) madaLabelEn.textContent = 'Accredited by Mada';
+      // Show the other language in the switcher so users can toggle to it
+      document.getElementById('language-switcher').textContent='العربية';
+      // List wrapper direction and label
+      const awardsList = document.getElementById('awards-list');
+      if (awardsList) { awardsList.setAttribute('dir','ltr'); awardsList.setAttribute('aria-label','Awards list'); }
+      // Awards tables
+      document.getElementById('awards-ar').style.display='none';
+      document.getElementById('awards-en').style.display='table';
+      const ap = document.getElementById('awards-panel-en');
+      const at = document.getElementById('awards-total-en');
+      if (ap) ap.style.display='block';
+      if (at) at.style.display='block';
+      // Awards footnote and total note
+      const fna = document.getElementById('awards-footnote-ar');
+      const fne = document.getElementById('awards-footnote-en');
+      const tna = document.getElementById('awards-total-note-ar');
+      const tne = document.getElementById('awards-total-note-en');
+      if (fna) fna.style.display = 'none';
+      if (fne) fne.style.display = 'block';
+      if (tna) tna.style.display = 'none';
+      if (tne) tne.style.display = 'block';
+      // Footer logo
+      const flogo = document.getElementById('footer-logo');
+      if (flogo) { flogo.src = 'logo/footer-logo.svg'; }
+    };
+
+    const langSwitcherEl = document.getElementById('language-switcher');
+    if (langSwitcherEl) {
+      langSwitcherEl.addEventListener('click', () => {
+        if (document.documentElement.getAttribute('lang') === 'ar') showEn(); else showAr();
+      });
+    }
+    // Initialize (default to Arabic)
+    showAr();
+
+    // Year in footer
+    document.getElementById('rights-year').textContent = new Date().getFullYear();
+  </script>
+    <!-- Icons via Font Awesome CDN (optional). Remove if not desired. -->
+    <!-- Font Awesome JS is not required for icon rendering; CSS is sufficient -->
+  </body>
+</html>

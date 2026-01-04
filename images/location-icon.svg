@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="41" height="41" viewBox="0 0 41 41">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.319" y1="-0.144" x2="0.921" y2="1.03" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#8e1737"/>
+      <stop offset="1" stop-color="#c9345c"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.454" x2="0.834" y2="1.07" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.522"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_29449" data-name="Group 29449" transform="translate(0.5 0.5)">
+    <rect id="Rectangle_17511" data-name="Rectangle 17511" width="40" height="40" rx="4" fill="#f5f5f5" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+    <g id="Group_22166" data-name="Group 22166" transform="translate(9 9)">
+      <circle id="Ellipse_3350" data-name="Ellipse 3350" cx="11" cy="11" r="11" fill="url(#linear-gradient)"/>
+      <path id="Path_45724" data-name="Path 45724" d="M8.27,71.823l1.8-5.752,5.752-1.8-1.8,5.752Z" transform="translate(-1.046 -57.046)" fill-rule="evenodd" fill="url(#linear-gradient-2)" style="mix-blend-mode: hard-light;isolation: isolate"/>
+    </g>
+  </g>
+</svg>
